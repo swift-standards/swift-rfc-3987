@@ -27,9 +27,10 @@ extension RFC_3987 {
         /// process(iri: url)  // Works!
         /// ```
         public protocol Representable {
-            /// The IRI as a string
-            var iriString: String { get }
+            /// The IRI representation
+            var iri: RFC_3987.IRI { get }
         }
+
         /// The IRI string
         public let value: String
 
@@ -262,23 +263,32 @@ extension RFC_3987 {
     }
 }
 
+// MARK: - IRI.Representable Protocol Extension
+
+extension RFC_3987.IRI.Representable {
+    /// The IRI as a string (convenience)
+    public var iriString: String {
+        iri.value
+    }
+}
+
 // MARK: - IRI.Representable Conformance
 
 extension RFC_3987.IRI: RFC_3987.IRI.Representable {
-    public var iriString: String {
-        value
+    public var iri: RFC_3987.IRI {
+        self
     }
 }
 
 // MARK: - Foundation URL Conformance
 
 extension URL: RFC_3987.IRI.Representable {
-    /// The URL as an IRI string
+    /// The URL as an IRI
     ///
     /// Foundation's URL type already supports Unicode characters,
     /// making it naturally compatible with IRIs as defined in RFC 3987.
-    public var iriString: String {
-        absoluteString
+    public var iri: RFC_3987.IRI {
+        RFC_3987.IRI(unchecked: absoluteString)
     }
 }
 
