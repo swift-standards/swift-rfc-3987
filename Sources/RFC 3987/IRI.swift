@@ -59,10 +59,19 @@ extension RFC_3987 {
             self.value = url.absoluteString
         }
 
-        /// Creates an IRI from a string without validation (for internal use)
+        /// Creates an IRI from a string without validation
         ///
-        /// - Parameter value: The IRI string
-        internal init(unchecked value: String) {
+        /// Use this initializer when you have a string that is already known to be a valid IRI,
+        /// such as when converting from `IRI.Representable` types or deserializing from trusted sources.
+        ///
+        /// - Parameter value: The IRI string (should be valid, but not validated)
+        ///
+        /// Example:
+        /// ```swift
+        /// let url = URL(string: "https://example.com")!
+        /// let iri = RFC_3987.IRI(unchecked: url.absoluteString)
+        /// ```
+        public init(unchecked value: String) {
             self.value = value
         }
 
