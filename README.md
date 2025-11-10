@@ -12,8 +12,8 @@ This package provides a Swift implementation of IRIs (Internationalized Resource
 ## Features
 
 - ✅ IRI validation
-- ✅ IRI normalization (scheme/host lowercasing, default port removal)
-- ✅ IRI to URI conversion
+- ✅ IRI normalization (scheme/host lowercasing, default port removal, path normalization)
+- ✅ IRI to ASCII string conversion (percent-encoding)
 - ✅ Unicode character support
 - ✅ HTTP/HTTPS specific validation
 - ✅ Protocol-based design with `IRI.Representable`
@@ -94,13 +94,15 @@ let normalized = iri.normalized()
 print(normalized.value) // "https://example.com/path"
 ```
 
-### URI Conversion
+### IRI to ASCII Conversion
 
 ```swift
 let iri = try RFC_3987.IRI("https://example.com/hello world")
-let uri = iri.toURI()
-print(uri) // "https://example.com/hello%20world"
+let asciiString = iri.toURI()
+print(asciiString) // "https://example.com/hello%20world"
 ```
+
+The `toURI()` method produces an ASCII-compatible string representation using percent-encoding.
 
 ## IRI vs URI
 
@@ -114,7 +116,7 @@ print(uri) // "https://example.com/hello%20world"
 - Used in protocols and systems
 - Example: `https://xn--r8jz45g.jp/%E5%AF%BF%E5%8F%B8`
 
-IRIs can be converted to URIs when needed for protocol operations.
+IRIs can be mapped to ASCII-compatible strings when needed for protocol operations.
 
 ## RFC 3987 Compliance
 
