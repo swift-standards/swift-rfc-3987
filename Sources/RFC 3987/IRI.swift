@@ -171,7 +171,6 @@ extension RFC_3987 {
     /// - Returns: The path with dot segments removed
     ///
     /// - Note: Cyclomatic complexity inherent to RFC 3986 Section 5.2.4 algorithm
-    // swiftlint:disable cyclomatic_complexity
     public static func removeDotSegments(from path: String) -> String {
         var input = path
         var output = ""
@@ -223,7 +222,6 @@ extension RFC_3987 {
 
         return output
     }
-    // swiftlint:enable cyclomatic_complexity
 
     // MARK: - Validation Functions
 
