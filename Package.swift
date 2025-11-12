@@ -18,11 +18,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "RFC 3987",
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableExperimentalFeature("StrictConcurrency")
-            ]
+            name: "RFC 3987"
         ),
         .testTarget(
             name: "RFC 3987 Tests",
@@ -30,3 +26,11 @@ let package = Package(
         )
     ]
 )
+
+for target in package.targets {
+    target.swiftSettings?.append(
+        contentsOf: [
+            .enableUpcomingFeature("MemberImportVisibility")
+        ]
+    )
+}

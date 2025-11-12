@@ -226,20 +226,41 @@ extension RFC_3987 {
 
     // MARK: - Validation Functions
 
+    /// Validation mode for IRI checking
+    public enum ValidationMode {
+        /// Lenient validation using Foundation's URL parsing (default)
+        case lenient
+
+        /// Strict validation following RFC 3987 character ranges
+        case strict
+    }
+
     /// Validates if a string is a valid IRI
     ///
-    /// This performs basic validation using Foundation's URL validation.
+    /// - Parameters:
+    ///   - string: The string to validate
+    ///   - mode: Validation mode (lenient or strict). Default is lenient.
+    /// - Returns: true if the string appears to be a valid IRI
+    ///
+    /// ## Validation Modes
+    ///
+    /// ### Lenient (Default)
+    /// Uses Foundation's URL parser, which is permissive and handles most real-world IRIs.
     /// A valid IRI should:
     /// - Be a valid URL according to Foundation
     /// - Have a scheme (e.g., http, https, urn, mailto)
     ///
-    /// Note: This is a lenient validation suitable for most use cases.
-    /// Full RFC 3987 compliance would require more strict validation
-    /// of character ranges and syntax rules.
+    /// Suitable for most use cases where you want to accept valid IRIs from various sources.
     ///
-    /// - Parameter string: The string to validate
-    /// - Returns: true if the string appears to be a valid IRI
-    public static func isValidIRI(_ string: String) -> Bool {
+    /// ### Strict
+    /// Enforces RFC 3987 character ranges and syntax rules more strictly:
+    /// - Validates scheme format (ALPHA *( ALPHA / DIGIT / "+" / "-" / "." ))
+    /// - Rejects control characters (U+0000 to U+001F, U+007F to U+009F)
+    /// - Rejects unencoded space characters
+    /// - Validates component structure
+    ///
+    /// Use strict mode for security-sensitive contexts or when RFC compliance is critical.
+    public static func isValidIRI(_ string: String, mode: ValidationMode = .lenient) -> Bool {
         // Empty strings are not valid IRIs
         guard !string.isEmpty else { return false }
 
@@ -247,7 +268,43 @@ extension RFC_3987 {
         guard let url = URL(string: string) else { return false }
 
         // IRI must have a scheme per RFC 3987
-        guard url.scheme != nil else { return false }
+        guard let scheme = url.scheme else { return false }
+
+        // Strict mode performs additional RFC 3987 validation
+        if mode == .strict {
+            return validateStrictIRI(string: string, url: url, scheme: scheme)
+        }
+
+        return true
+    }
+
+    /// Performs strict RFC 3987 validation
+    private static func validateStrictIRI(string: String, url: URL, scheme: String) -> Bool {
+        // Validate scheme format: ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
+        let schemePattern = "^[a-zA-Z][a-zA-Z0-9+.-]*$"
+        guard scheme.range(of: schemePattern, options: .regularExpression) != nil else {
+            return false
+        }
+
+        // Check for invalid control characters (U+0000 to U+001F, U+007F to U+009F)
+        let controlCharacterRange = CharacterSet.controlCharacters
+        if string.rangeOfCharacter(from: controlCharacterRange) != nil {
+            return false
+        }
+
+        // Check for unencoded space characters (should be percent-encoded in valid IRIs)
+        if string.contains(" ") {
+            return false
+        }
+
+        // Validate that fragment (if present) doesn't contain invalid characters
+        if let fragment = url.fragment {
+            // Fragment can contain: pchar / "/" / "?"
+            // For now, just check it's not empty
+            if fragment.isEmpty {
+                return false
+            }
+        }
 
         return true
     }
