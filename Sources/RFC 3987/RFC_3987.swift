@@ -52,10 +52,10 @@ extension RFC_3987 {
         // Per RFC 3987: scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
         // Schemes must be ASCII per RFC 3987 Section 2.2
         guard let firstChar = scheme.first,
-              firstChar.isASCIILetter else { return false }
+              firstChar.ascii.isLetter else { return false }
 
         for char in scheme {
-            guard char.isASCIILetter || char.isASCIIDigit || "+-.".contains(char) else {
+            guard char.ascii.isLetter || char.ascii.isDigit || "+-.".contains(char) else {
                 return false
             }
         }
