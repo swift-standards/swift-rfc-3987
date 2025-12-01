@@ -20,8 +20,6 @@ public import INCITS_4_1986
 /// - [RFC 3987](https://www.rfc-editor.org/rfc/rfc3987)
 public enum RFC_3987 {}
 
-
-
 // MARK: - Validation
 
 extension RFC_3987 {
@@ -67,7 +65,8 @@ extension RFC_3987 {
         // Per RFC 3987: scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
         // Schemes must be ASCII per RFC 3987 Section 2.2
         guard let firstChar = scheme.first,
-              firstChar.ascii.isLetter else { return false }
+            firstChar.ascii.isLetter
+        else { return false }
 
         for char in scheme {
             guard char.ascii.isLetter || char.ascii.isDigit || "+-.".contains(char) else {
@@ -77,8 +76,9 @@ extension RFC_3987 {
 
         // Check for control characters (U+0000 to U+001F, U+007F-U+009F)
         for scalar in string.unicodeScalars {
-            if (scalar.value >= 0x00 && scalar.value <= 0x1F) ||
-               (scalar.value >= 0x7F && scalar.value <= 0x9F) {
+            if (scalar.value >= 0x00 && scalar.value <= 0x1F)
+                || (scalar.value >= 0x7F && scalar.value <= 0x9F)
+            {
                 return false
             }
         }

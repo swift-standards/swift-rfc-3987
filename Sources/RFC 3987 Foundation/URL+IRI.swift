@@ -73,7 +73,6 @@ extension RFC_3987.IRI {
         return url.absoluteString
     }
 
-
     /// Creates an IRI from a Foundation URL
     ///
     /// - Parameter url: The URL to convert to an IRI
@@ -118,7 +117,7 @@ extension RFC_3987.IRI {
         if let scheme = components.scheme, let port = components.port {
             let defaultPort =
                 (scheme == "http" && port == 80) || (scheme == "https" && port == 443)
-                    || (scheme == "ftp" && port == 21)
+                || (scheme == "ftp" && port == 21)
             if defaultPort {
                 components.port = nil
             }
@@ -150,7 +149,6 @@ extension RFC_3987.IRI {
         )
     }
 }
-
 
 // MARK: - Foundation URL Conformance
 
@@ -221,7 +219,11 @@ extension RFC_3987 {
     }
 
     /// Performs strict RFC 3987 validation using Foundation
-    private static func validateStrictWithFoundation(string: String, url: URL, scheme: String)
+    private static func validateStrictWithFoundation(
+        string: String,
+        url: URL,
+        scheme: String
+    )
         -> Bool
     {
         // Validate scheme format: ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )

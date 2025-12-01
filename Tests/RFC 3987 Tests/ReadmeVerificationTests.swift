@@ -1,5 +1,6 @@
-import Testing
 import Foundation
+import Testing
+
 @testable import RFC_3987
 @testable import RFC_3987_Foundation
 

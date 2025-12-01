@@ -36,7 +36,7 @@ extension RFC_3987 {
         public init(__unchecked: Void, value: String) {
             self.value = value
         }
-        
+
         /// Creates an IRI from a string with validation
         ///
         /// This initializer validates the IRI and throws an error if invalid.
@@ -113,7 +113,7 @@ extension RFC_3987.IRI: UInt8.ASCII.RawRepresentable {
 }
 
 extension RFC_3987.IRI {
-    
+
     /// Protocol for types that can represent IRIs
     ///
     /// Types conforming to this protocol can be used interchangeably wherever an IRI
@@ -134,12 +134,10 @@ extension RFC_3987.IRI {
     }
 }
 
-
 extension RFC_3987 {
-    
-    
+
     // MARK: - Path Normalization
-    
+
     /// Removes dot segments from a path per RFC 3986 Section 5.2.4
     ///
     /// This algorithm removes "." and ".." segments from paths to produce
@@ -154,7 +152,7 @@ extension RFC_3987 {
     public static func removeDotSegments(from path: String) -> String {
         var input = path
         var output = ""
-        
+
         while !input.isEmpty {
             // A: If the input buffer begins with a prefix of "../" or "./"
             if input.hasPrefix("../") {
@@ -199,7 +197,7 @@ extension RFC_3987 {
                 }
             }
         }
-        
+
         return output
     }
 }
