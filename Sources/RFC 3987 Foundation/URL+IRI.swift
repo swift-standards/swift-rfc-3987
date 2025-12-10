@@ -143,7 +143,7 @@ extension RFC_3987.IRI {
             return self
         }
 
-        return RFC_3987.IRI.init(
+        return RFC_3987.IRI(
             __unchecked: (),
             value: normalizedURL.absoluteString
         )
@@ -223,9 +223,7 @@ extension RFC_3987 {
         string: String,
         url: URL,
         scheme: String
-    )
-        -> Bool
-    {
+    ) -> Bool {
         // Validate scheme format: ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
         let schemePattern = "^[a-zA-Z][a-zA-Z0-9+.-]*$"
         guard scheme.range(of: schemePattern, options: .regularExpression) != nil else {

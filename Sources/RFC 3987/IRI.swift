@@ -63,9 +63,9 @@ extension RFC_3987 {
     }
 }
 
-// MARK: - UInt8.ASCII.Serializable
+// MARK: - Binary.ASCII.Serializable
 
-extension RFC_3987.IRI: UInt8.ASCII.Serializable {
+extension RFC_3987.IRI: Binary.ASCII.Serializable {
     /// Serialize IRI to UTF-8 bytes
     ///
     /// ## Category Theory
@@ -108,7 +108,7 @@ extension RFC_3987.IRI: UInt8.ASCII.Serializable {
 
 // MARK: - Protocol Conformances
 
-extension RFC_3987.IRI: UInt8.ASCII.RawRepresentable {
+extension RFC_3987.IRI: Binary.ASCII.RawRepresentable {
     public typealias RawValue = String
 }
 
