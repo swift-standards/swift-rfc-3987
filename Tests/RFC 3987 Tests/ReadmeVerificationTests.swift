@@ -18,7 +18,7 @@ struct `README Verification` {
     @Test
     func `Creating IRIs - with validation`() throws {
         // From README lines 42-43
-        let validatedIRI = try RFC_3987.IRI("https://example.com/寿司")
+        let validatedIRI: RFC_3987.IRI = try .init("https://example.com/寿司")
 
         #expect(validatedIRI.value == "https://example.com/寿司")
     }
@@ -74,7 +74,7 @@ struct `README Verification` {
     @Test
     func `Normalization example`() throws {
         // From README lines 89-91
-        let iri = try RFC_3987.IRI("HTTPS://EXAMPLE.COM:443/path")
+        let iri: RFC_3987.IRI = try .init("HTTPS://EXAMPLE.COM:443/path")
         let normalized = iri.normalized()
 
         #expect(normalized.value == "https://example.com/path")
@@ -83,7 +83,7 @@ struct `README Verification` {
     @Test
     func `URI Conversion example`() throws {
         // From README lines 100-102
-        let iri = try RFC_3987.IRI("https://example.com/hello world")
+        let iri: RFC_3987.IRI = try .init("https://example.com/hello world")
         let asciiString = iri.uriString
 
         // URL encoding may use + or %20 for spaces
@@ -94,7 +94,7 @@ struct `README Verification` {
     @Test
     func `IRI vs URI - IRI with Unicode`() throws {
         // From README line 107 - IRI example
-        let iri = try RFC_3987.IRI("https://例え.jp/寿司")
+        let iri: RFC_3987.IRI = try .init("https://例え.jp/寿司")
 
         #expect(iri.value.contains("例え"))
         #expect(iri.value.contains("寿司"))
@@ -113,7 +113,7 @@ struct `README Verification` {
     @Test
     func `RFC 3987 Compliance - accepts Unicode`() throws {
         // From README line 120
-        let unicodeIRI = try RFC_3987.IRI("https://example.com/日本語")
+        let unicodeIRI: RFC_3987.IRI = try .init("https://example.com/日本語")
 
         #expect(unicodeIRI.value.contains("日本語"))
     }

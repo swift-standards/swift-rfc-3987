@@ -1,4 +1,4 @@
-public import INCITS_4_1986
+import INCITS_4_1986
 
 /// RFC 3987: Internationalized Resource Identifiers (IRIs)
 ///
