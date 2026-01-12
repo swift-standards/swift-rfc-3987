@@ -1,4 +1,4 @@
-public import INCITS_4_1986
+public import ASCII
 
 extension RFC_3987 {
     /// An Internationalized Resource Identifier (IRI) as defined in RFC 3987

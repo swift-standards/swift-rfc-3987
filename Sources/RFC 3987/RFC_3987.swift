@@ -1,4 +1,4 @@
-import INCITS_4_1986
+import ASCII
 
 /// RFC 3987: Internationalized Resource Identifiers (IRIs)
 ///
