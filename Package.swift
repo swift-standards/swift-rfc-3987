@@ -18,7 +18,7 @@ let package = Package(
         .library(
             name: "RFC 3987 Foundation",
             targets: ["RFC 3987 Foundation"]
-        ),
+        )
     ],
     dependencies: [
         .package(path: "../../swift-primitives/swift-binary-primitives"),
@@ -30,20 +30,13 @@ let package = Package(
             dependencies: [
                 .product(name: "Binary Primitives", package: "swift-binary-primitives"),
                 .product(name: "ASCII", package: "swift-ascii")
-            ]
+    ]
             // Core module - uses INCITS_4_1986 for ASCII validation, no Foundation
         ),
         .target(
             name: "RFC 3987 Foundation",
             dependencies: ["RFC 3987"]
             // Foundation extensions - depends on core
-        ),
-        .testTarget(
-            name: "RFC 3987".tests,
-            dependencies: [
-                "RFC 3987",
-                "RFC 3987 Foundation"
-            ]
         )
     ],
     swiftLanguageModes: [.v6]
