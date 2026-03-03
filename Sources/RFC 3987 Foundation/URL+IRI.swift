@@ -24,7 +24,7 @@ extension URL {
     /// - Parameter iri: The IRI to convert to a URL
     /// - Throws: `IRIConversionError.invalidIRI` if the IRI cannot be converted to a valid URL
     /// - Note: This should succeed for all valid RFC 3987 IRIs. Failure indicates a malformed IRI.
-    public init(iri: RFC_3987.IRI) throws {
+    public init(iri: RFC_3987.IRI) throws(IRIConversionError) {
         // Try direct conversion first (for ASCII IRIs)
         if let url = URL(string: iri.value) {
             self = url
